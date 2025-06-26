@@ -173,8 +173,12 @@ function displayDriver(list) {
                 name: driver.name
             }));
             
-            // Navigate to driver details (will be implemented later)
-            console.log(`Navigate to driver details: ${driver.driverID}`);
+            // Navigate to driver details through shared layout
+            if (window.sharedLayout) {
+                window.sharedLayout.loadPageContent('driver-Managment/driverDetails.html');
+            } else {
+                console.error("Shared layout not available");
+            }
         });
 
         container.appendChild(driverCard);

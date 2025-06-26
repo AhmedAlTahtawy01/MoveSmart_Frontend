@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="ar">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>تفاصيل السائق</title>
+  <link rel="stylesheet" href="../../Assets/Styles/driver-Managment/driverDetails.css" />
+</head>
+
+<body>
+  <div class="container">
+    <!-- القسم العلوي -->
+    <div class="top-section">
+      <div class="driver-container">
+        <h2 class="driver-title">تفاصيل السائق</h2>
+        <div class="driver-info">
+          <img src="../../Assets/Images/driver-Avt.png" alt="صورة السائق" class="profile-pic" />
+          <div class="driver-details-container">
+            <h2 id="driver-name">اسم السائق</h2>
+            <p id="driver-phone" class="driver-details">
+              رقم الهاتف: غير متوفر
+            </p>
+            <p id="driver-status" class="driver-details">الحالة: غير متوفر</p>
+            <p id="driver-national-id" class="driver-details">
+              الرقم القومي: غير متوفر
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="left-side">
+        <button class="back-btn" onclick="goBackToDriverList()">⬅ رجوع</button>
+        <div class="actions">
+          <button class="delete-btn" id="delete-btn">🗑 حذف</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="tabs-container">
+      <div class="tabs">
+        <button class="tab active" data-tab="driver-info">
+          معلومات السائق
+        </button>
+        <button class="tab" data-tab="work-history">سجل أوامر الشغل</button>
+        <button class="tab" data-tab="vacation-record">سجل الإجازات</button>
+      </div>
+      <button class="save-btn" id="save-btn">✅ حفظ</button>
+      <button class="add-vacation-btn" id="add-vacation-btn">➕ إضافة إجازة</button>
+    </div>
+
+    <!-- معلومات السائق -->
+    <div class="tab-content" id="driver-info">
+      <div class="form-container">
+        <div class="input-group">
+          <label>الاسم :</label>
+          <input type="text" name="name" placeholder="أدخل الاسم" />
+        </div>
+        <div class="input-group">
+          <label>رقم السيارة:</label>
+          <input type="text" name="vehicleID" placeholder="أدخل رقم السيارة" />
+        </div>
+
+        <div class="input-group">
+          <label>رقم الهاتف:</label>
+          <input type="text" name="phone" placeholder="أدخل رقم الهاتف" />
+        </div>
+        <div class="input-group">
+          <label>الرقم القومي:</label>
+          <input type="text" name="nationalNum" placeholder="أدخل الرقم القومي" />
+        </div>
+        <div class="input-group">
+          <label>الحالة:</label>
+          <select name="status">
+            <option value="1">متاح</option>
+            <option value="2">غائب</option>
+            <option value="3">قيد العمل</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- سجل أوامر الشغل -->
+    <div class="tab-content" id="work-history" style="display: none">
+      <div class="work-orders-container">
+        <table class="orders-table">
+          <thead>
+            <tr>
+              <th>السيارة</th>
+              <th>التاريخ</th>
+              <th>الوقت</th>
+              <th>الرحلة</th>
+              <th>KM/المسافة</th>
+              <th>رقم أمر الشغل</th>
+            </tr>
+          </thead>
+          <tbody id="work-orders-tbody">
+            <!-- JavaScript will populate this -->
+          </tbody>
+        </table>
+        <div id="no-work-orders" style="display: none; text-align: center; padding: 40px; color: #666;">
+          <p>لا توجد أوامر شغل مسجلة لهذا السائق</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- سجل الإجازات -->
+    <div class="tab-content" id="vacation-record" style="display: none">
+      <div class="vacation-header">
+        <table class="vacation-table">
+          <thead>
+            <tr>
+              <th>من</th>
+              <th>إلى</th>
+              <th>الفترة بالأيام</th>
+              <th>الإجراءات</th>
+            </tr>
+          </thead>
+          <tbody id="vacation-tbody">
+            <!-- JavaScript will populate this -->
+          </tbody>
+        </table>
+      </div>
+      <div class="vacation-content" id="vacation-content">
+        <!-- JavaScript will inject content here -->
+      </div>
+    </div>
+
+    <!-- نافذة إدخال الإجازة -->
+    <div id="leave-modal" class="modal" style="display: none">
+      <div class="modal-content">
+        <span class="close-modal" id="close-modal">&times;</span>
+        <h3>إضافة إجازة جديدة</h3>
+        <div class="modal-form">
+          <label>من: <input type="date" id="leave-from" /></label>
+          <label>إلى: <input type="date" id="leave-to" /></label>
+          <label>سائق بديل:
+            <select id="substitute-driver">
+              <option value="">اختر سائق بديل</option>
+            </select>
+          </label>
+          <button id="save-leave-btn">حفظ الإجازة</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading indicator -->
+    <div id="loading-indicator" style="display: none; text-align: center; padding: 40px;">
+      <p>جاري التحميل...</p>
+    </div>
+  </div>
+
+  <script>
+    // Global function for navigation back to driver list
+    function goBackToDriverList() {
+      // Navigate back to driver list through shared layout
+      if (window.parent && window.parent.changeContent) {
+        window.parent.changeContent('drivers');
+      } else if (window.changeContent) {
+        window.changeContent('drivers');
+      } else {
+        // Fallback: use browser back
+        window.history.back();
+      }
+    }
+  </script>
+</body>
+
+</html>

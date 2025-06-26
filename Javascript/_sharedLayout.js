@@ -243,6 +243,10 @@ class SharedLayoutManager {
                 cssPath: '/Final_Frontend/Assets/Styles/driver-Managment/driverList.css',
                 jsPath: '/Final_Frontend/Javascript/driver-Managment/driverList.js'
             },
+            'driver-Managment/driverDetails.html': {
+                cssPath: '/Final_Frontend/Assets/Styles/driver-Managment/driverDetails.css',
+                jsPath: '/Final_Frontend/Javascript/driver-Managment/driverDetails.js'
+            },
             'order-Managment/orderList.html': {
                 cssPath: '/Final_Frontend/Assets/Styles/order-Managment/orderList.css',
                 jsPath: '/Final_Frontend/Javascript/order-Managment/orderList.js'
@@ -265,6 +269,7 @@ class SharedLayoutManager {
             'css-car-Managment-carList-html',
             'css-car-Managment-carDetails-html',
             'css-driver-Managment-driverList-html',
+            'css-driver-Managment-driverDetails-html',
             'css-order-Managment-orderList-html',
             'css-disposal-Managment-disposalList-html',
             'css-disposal-Managment-spareParts-html'
@@ -324,6 +329,7 @@ class SharedLayoutManager {
             const allPageScripts = [
                 '#script-car-Managment-carList-html',
                 '#script-driver-Managment-driverList-html',
+                '#script-driver-Managment-driverDetails-html',
                 '#script-order-Managment-orderList-html',
                 '#script-disposal-Managment-disposalList-html',
                 '#script-disposal-Managment-spareParts-html',
@@ -343,7 +349,12 @@ class SharedLayoutManager {
                 'allCars', 'driverPageCars', 'drivers', 'userRole', 'eventHandlersSetup',
                 'loadCars', 'displayCars', 'loadDriver', 'displayDriver',
                 'refreshData', 'searchDriver', 'filterDriver', 'openPop', 'closePop',
-                'submitDriver', 'addDriver', 'validate', 'showFieldError'
+                'submitDriver', 'addDriver', 'validate', 'showFieldError',
+                'currentDriverID', 'driverData', 'initializeDriverDetails', 'setupEventListeners',
+                'showTab', 'loadDriverData', 'displayDriverData', 'saveDriverData', 'deleteDriver',
+                'loadWorkHistory', 'loadSubstituteDrivers', 'loadDriverVacations', 'saveVacation',
+                'deleteVacation', 'clearVacationForm', 'showLoading', 'showError', 'showSuccess',
+                'goBackToDriverList'
             ];
             
             globalVarsToClean.forEach(varName => {
@@ -412,6 +423,42 @@ class SharedLayoutManager {
                                 };
                                 
                                 initDriverList();
+                            }
+                        }, 300); // Increased delay to ensure script is fully loaded
+                    }
+                    
+                    // Special initialization for driver details
+                    else if (pagePath === 'driver-Managment/driverDetails.html') {
+                        // Manually trigger driver details initialization since DOMContentLoaded won't fire
+                        setTimeout(() => {
+                            const token = localStorage.getItem('token');
+                            if (token) {
+                                // Use a more specific check to ensure driver details functions are loaded
+                                let attempts = 0;
+                                const maxAttempts = 10;
+                                
+                                const initDriverDetails = () => {
+                                    attempts++;
+                                    
+                                    // Check if driver details functions are available
+                                    if (window.initializeDriverDetails && typeof window.initializeDriverDetails === 'function') {
+                                        console.log('👤 Initializing driver details page...');
+                                        
+                                        // Call driver details initialization function
+                                        try {
+                                            window.initializeDriverDetails();
+                                        } catch (error) {
+                                            console.error('Error initializing driver details:', error);
+                                        }
+                                    } else if (attempts < maxAttempts) {
+                                        console.log(`⏳ Waiting for driver details functions... (${attempts}/${maxAttempts})`);
+                                        setTimeout(initDriverDetails, 200);
+                                    } else {
+                                        console.error('❌ Driver details functions not available after maximum attempts');
+                                    }
+                                };
+                                
+                                initDriverDetails();
                             }
                         }, 300); // Increased delay to ensure script is fully loaded
                     }
