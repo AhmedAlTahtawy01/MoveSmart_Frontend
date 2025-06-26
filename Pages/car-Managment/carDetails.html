@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تفاصيل المركبة - Move Smart</title>
+</head>
+<body>
+    <div class="container">
+        <div class="top-section">
+            <div class="car-container">
+                <h2 class="car-title">تفاصيل المركبة</h2>
+                <div class="car-info">
+                    <div class="profile-pic-placeholder"></div>
+                    <div class="car-details-container">
+                        <h2 id="car-number">رقم المركبة</h2>
+                        <p id="car-make">الماركة: -</p>
+                        <p id="car-model">الموديل: -</p>
+                        <p id="car-type">نوع المركبة: -</p>
+                    </div>
+                </div>
+                <div class="km-box">
+                    <p>إجمالي الكيلومترات: <span id="total-km">0</span> كم</p>
+                </div>
+            </div>
+
+            <div class="left-side">
+                <button class="back-btn" onclick="goBackToVehiclesList()">⬅ رجوع</button>
+                <div class="actions">
+                    <button class="delete-btn" onclick="deleteVehicle()">حذف</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="tabs-container">
+            <div class="tabs">
+                <button class="tab active" data-tab="car-info" onclick="switchTab(this, 'car-info')">معلومات المركبة</button>
+                <button class="tab" data-tab="work-orders" onclick="switchTab(this, 'work-orders')">سجل أوامر الشغل</button>
+                <button class="tab" data-tab="maintenance-record" onclick="switchTab(this, 'maintenance-record')">سجل الصيانة</button>
+            </div>
+            <button class="save-btn" onclick="saveVehicleData()">✅ حفظ</button>
+        </div>
+
+        <div class="tab-content" id="car-info" style="display: block;">
+            <div class="form-container">
+                <div class="column">
+                    <div class="input-group">
+                        <label>رقم اللوحة:</label>
+                        <input type="text" name="carNumber" id="carNumber" />
+                        <small class="error" id="error-carNumber"></small>
+                    </div>
+
+                    <div class="input-group">
+                        <label>الماركة:</label>
+                        <input type="text" name="carBrand" id="carBrand" />
+                        <small class="error" id="error-carBrand"></small>
+                    </div>
+
+                    <div class="input-group">
+                        <label>الموديل:</label>
+                        <input type="text" name="carModel" id="carModel" />
+                        <small class="error" id="error-carModel"></small>
+                    </div>
+
+                    <div class="input-group">
+                        <label>نوع المركبة:</label>
+                        <select name="carType" id="carType">
+                            <option value="">-- اختر --</option>
+                            <option value="0">سيدان</option>
+                            <option value="1">1 كبينة</option>
+                            <option value="2">2 كبينة</option>
+                            <option value="3">شاحنة</option>
+                            <option value="4">ميكروباص</option>
+                            <option value="5">ميني باص</option>
+                            <option value="6">أتوبيس</option>
+                            <option value="7">إسعاف</option>
+                        </select>
+                        <small class="error" id="error-carType"></small>
+                    </div>
+
+                    <div class="input-group">
+                        <label>حالة المركبة:</label>
+                        <select name="carCondition" id="carCondition">
+                            <option value="">-- اختر --</option>
+                            <option value="1">متاحة</option>
+                            <option value="2">مشغولة</option>
+                            <option value="3">في الصيانة</option>
+                        </select>
+                        <small class="error" id="error-carCondition"></small>
+                    </div>
+
+                    <div class="input-group" id="bus-capacity-group" style="display: none;">
+                        <label>سعة الباص:</label>
+                        <input type="number" name="busCapacity" id="busCapacity" />
+                        <small class="error" id="error-busCapacity"></small>
+                    </div>
+                </div>
+
+                <div class="column">
+                    <div class="input-group">
+                        <label>المهمة المرتبطة:</label>
+                        <input type="text" name="carFunction" id="carFunction" />
+                        <small class="error" id="error-carFunction"></small>
+                    </div>
+
+                    <div class="input-group">
+                        <label>المستشفى التابعة لها:</label>
+                        <input type="text" name="hospital" id="hospital" />
+                        <small class="error" id="error-hospital"></small>
+                    </div>
+
+                    <div class="input-group">
+                        <label>معدل استهلاك الوقود:</label>
+                        <input type="number" step="0.01" name="fuelConsumption" id="fuelConsumption" />
+                        <small class="error" id="error-fuelConsumption"></small>
+                    </div>
+
+                    <div class="input-group">
+                        <label>معدل استهلاك الزيت:</label>
+                        <input type="number" step="0.01" name="oilConsumption" id="oilConsumption" />
+                        <small class="error" id="error-oilConsumption"></small>
+                    </div>
+
+                    <div class="input-group">
+                        <label>نوع الوقود:</label>
+                        <select name="fuelType" id="fuelType">
+                            <option value="">-- اختر --</option>
+                            <option value="0">بنزين</option>
+                            <option value="1">ديزل</option>
+                        </select>
+                        <small class="error" id="error-fuelType"></small>
+                    </div>
+
+                    <div class="input-group" id="bus-available-space-group" style="display: none;">
+                        <label>المقاعد المتاحة:</label>
+                        <input type="number" name="busAvailableSpace" id="busAvailableSpace" />
+                        <small class="error" id="error-busAvailableSpace"></small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="tab-content" id="work-orders" style="display: none;">
+            <table class="orders-table">
+                <thead>
+                    <tr>
+                        <th>رقم المركبة</th>
+                        <th>التاريخ</th>
+                        <th>الوقت</th>
+                        <th>الرحلة</th>
+                        <th>المسافة (كم)</th>
+                        <th>رقم أمر الشغل</th>
+                    </tr>
+                </thead>
+                <tbody class="orders-content">
+                    <tr>
+                        <td colspan="6" style="text-align: center; padding: 20px; color: #666;">
+                            لا توجد أوامر شغل متاحة
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="tab-content" id="maintenance-record" style="display: none;">
+            <table class="maintenance-table">
+                <thead>
+                    <tr>
+                        <th>رقم التسلسل</th>
+                        <th>التاريخ</th>
+                        <th>تفاصيل الصيانة</th>
+                        <th>التكلفة</th>
+                    </tr>
+                </thead>
+                <tbody class="maintenance-content">
+                    <tr>
+                        <td colspan="4" style="text-align: center; padding: 20px; color: #666;">
+                            لا توجد سجلات صيانة متاحة
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

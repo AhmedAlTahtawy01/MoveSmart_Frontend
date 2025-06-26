@@ -1,0 +1,411 @@
+/* Car Details Page Styles */
+
+.container {
+    direction: rtl;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 0;
+    width: 90%;
+    margin: auto;
+    padding: 20px;
+}
+
+.top-section {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.car-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.car-details-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.car-info {
+    display: flex;
+    align-items: center;
+}
+
+.car-info h2 {
+    margin-bottom: 10px;
+    font-size: 24px;
+}
+
+.car-details {
+    flex-direction: column;
+    font-size: 18px;
+    color: #555;
+    margin: 5px 0;
+}
+
+#car-number {
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+}
+
+.car-title {
+    align-self: start;
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.profile-pic {
+    width: 200px;
+    height: 200px;
+    border-radius: 5px;
+    margin-left: 20px;
+    background: none;
+}
+
+.left-side {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.back-btn {
+    padding: 10px;
+    width: 90px;
+    color: white;
+    margin-bottom: 30px;
+    border: none;
+    border-radius: 5px;
+    background: #070707;
+    cursor: pointer;
+}
+
+.actions {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    position: relative;
+    top: -10px;
+}
+
+.actions button {
+    border-radius: 5px;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    width: 130px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease-in-out;
+}
+
+.actions button:hover {
+    transform: translateY(-3px);
+}
+
+.print-btn {
+    background: black;
+    color: white;
+}
+
+.report-btn {
+    background: rgb(218, 217, 217);
+}
+
+.delete-btn {
+    background: #dc3545;
+    color: white;
+}
+
+.tabs-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.tabs {
+    display: flex;
+    gap: 2px;
+}
+
+.tab {
+    padding: 5px 20px;
+    background: #e2e1e1d8;
+    cursor: pointer;
+    border: 0px 0px 2px 0px solid #ccc;
+    border-radius: 5px;
+}
+
+.tab.active {
+    background: rgba(88, 88, 88, 0.445);
+    border-bottom: 2px solid black;
+    font-weight: bold;
+    font-size: large;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease-in-out;
+}
+
+.save-btn {
+    padding: 10px 20px;
+    background: #28a745;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.form-container {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: space-between;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 30%;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+label {
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    padding-bottom: 5px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 18px;
+}
+
+.error {
+    color: red;
+    font-size: 13px;
+    margin-top: 5px;
+    display: block;
+}
+
+.input-group select {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 18px;
+    background-color: #fff;
+    font-family: inherit;
+}
+
+.input-group select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg fill='gray' viewBox='0 0 24 24' width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3e%3cpath d='M7 10l5 5 5-5z'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: left 8px center;
+    background-size: 20px;
+    padding-right: 30px;
+}
+
+.orders-table,
+.maintenance-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    margin-top: 20px;
+}
+
+.orders-table th,
+.orders-table td,
+.maintenance-table th,
+.maintenance-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: center;
+}
+
+.orders-table th,
+.maintenance-table th {
+    background: #eee;
+    font-weight: bold;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th,
+td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+.km-box {
+    background: #070707;
+    padding: 15px;
+    align-self: start;
+    margin-top: 10px;
+    text-align: center;
+    border-radius: 5px;
+    width: 200px;
+}
+
+.km-box p {
+    display: inline;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+}
+
+.details-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+}
+
+.popup-content {
+    background: white;
+    padding: 20px;
+    border-radius: 5px;
+    width: 80%;
+    max-width: 500px;
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 25px;
+    cursor: pointer;
+    color: #000;
+}
+
+.tab-content {
+    margin-top: 10px;
+    padding: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+        padding: 15px;
+    }
+
+    .top-section {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .car-info {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .profile-pic {
+        width: 150px;
+        height: 150px;
+        margin-left: 0;
+    }
+
+    .car-title {
+        font-size: 28px;
+    }
+
+    .actions {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .actions button {
+        width: 100%;
+    }
+
+    .tabs {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .tab {
+        width: 100%;
+    }
+
+    .form-container {
+        flex-direction: column;
+    }
+
+    .column {
+        width: 100%;
+    }
+}
+
+@media (min-width: 1024px) and (max-width: 1920px) {
+    .container {
+        width: 80%;
+        padding: 40px;
+        margin: 40px auto;
+    }
+    
+    .profile-pic {
+        width: 250px;
+        height: 250px;
+    }
+    
+    .car-title {
+        font-size: 44px;
+    }
+    
+    .car-info h2,
+    #car-number {
+        font-size: 32px;
+    }
+    
+    .form-container {
+        gap: 40px;
+        padding: 40px;
+    }
+    
+    .column {
+        width: 28%;
+        gap: 18px;
+    }
+    
+    .orders-table th,
+    .orders-table td,
+    .maintenance-table th,
+    .maintenance-table td {
+        font-size: 18px;
+        padding: 16px;
+    }
+    
+    .popup-content {
+        padding: 40px;
+        min-width: 400px;
+    }
+}

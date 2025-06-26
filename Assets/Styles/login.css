@@ -1,0 +1,157 @@
+/* Background styling */
+.login {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: Arial, sans-serif;
+  background-image: url('../Images/loginBackground.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Container styling */
+.login-container {
+  width: 400px;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 40px;
+  text-align: center;
+}
+
+/* Header styling */
+.login-header {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+/* Subheader styling */
+.login-subheader {
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Description styling */
+.login-description {
+  font-size: 14px;
+  color: #888888;
+  margin-bottom: 30px;
+}
+
+/* Form styling */
+.login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Input styling */
+.login-input {
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  
+  /* Arabic text direction */
+  direction: rtl;
+  text-align: right;
+}
+
+/* Error message styling */
+.error-message {
+  color: red;
+  font-size: 12px;
+  display: none;
+  margin-top: -15px;
+}
+
+/* Button styling */
+.login-button {
+  padding: 15px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  background-color: black;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.login-button:disabled {
+  background-color: #666;
+  cursor: not-allowed;
+}
+
+/* Loading spinner */
+.loading-spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid #ffffff4d;
+  border-top: 2px solid #ffffff;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-right: 8px;
+  display: none;
+}
+
+.login-button.loading .loading-spinner {
+  display: inline-block;
+}
+
+.login-button.loading .button-text {
+  opacity: 0.7;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* University logo styling */
+.university-logo {
+  width: 180px;
+  height: 180px;
+  margin: 0 auto 20px auto;
+  display: block;
+}
+
+/* Responsive styles */
+@media (max-width: 600px) {
+  .login-container {
+    width: 95vw;
+    padding: 18px 6px;
+    border-radius: 12px;
+  }
+  .university-logo {
+    width: 110px;
+    height: 110px;
+    margin-bottom: 10px;
+  }
+  .login-header {
+    font-size: 18px;
+  }
+  .login-subheader {
+    font-size: 15px;
+  }
+  .login-description {
+    font-size: 12px;
+    margin-bottom: 18px;
+  }
+  .login-button {
+    padding: 10px;
+    font-size: 14px;
+  }
+  .login-form {
+    gap: 12px;
+  }
+}

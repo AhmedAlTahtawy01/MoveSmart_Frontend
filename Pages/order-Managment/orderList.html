@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Management - Move Smart</title>
+</head>
+<body>
+    <div class="page-container">
+        <div class="page-header">
+            <h1>إدارة الطلبات</h1>
+            <p class="page-subtitle">إدارة وعرض جميع الطلبات في النظام</p>
+        </div>
+
+        <div class="page-actions">
+            <div class="search-section">
+                <input type="text" placeholder="البحث عن طلب..." class="search-input">
+                <button class="btn-search">🔍</button>
+            </div>
+            <div class="action-buttons">
+                <button class="btn-primary">إنشاء طلب جديد</button>
+                <button class="btn-secondary">تصدير القائمة</button>
+            </div>
+        </div>
+
+        <div class="filters-section">
+            <div class="filter-group">
+                <label>الحالة:</label>
+                <select class="filter-select">
+                    <option value="">جميع الحالات</option>
+                    <option value="pending">انتظار</option>
+                    <option value="approved">موافق عليه</option>
+                    <option value="rejected">مرفوض</option>
+                    <option value="completed">مكتمل</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>النوع:</label>
+                <select class="filter-select">
+                    <option value="">جميع الأنواع</option>
+                    <option value="transport">نقل</option>
+                    <option value="delivery">توصيل</option>
+                    <option value="emergency">طوارئ</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>التاريخ:</label>
+                <input type="date" class="filter-date">
+            </div>
+            <button class="btn-clear-filters">مسح الفلاتر</button>
+        </div>
+
+        <div class="table-container">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>رقم الطلب</th>
+                        <th>مقدم الطلب</th>
+                        <th>النوع</th>
+                        <th>الوجهة</th>
+                        <th>تاريخ الإنشاء</th>
+                        <th>الحالة</th>
+                        <th>السائق المخصص</th>
+                        <th>الإجراءات</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>ORD001</td>
+                        <td>د. أحمد محمد</td>
+                        <td>نقل</td>
+                        <td>المستشفى الجامعي</td>
+                        <td>2023-11-15</td>
+                        <td><span class="status approved">موافق عليه</span></td>
+                        <td>أحمد محمد علي</td>
+                        <td>
+                            <button class="btn-action">عرض</button>
+                            <button class="btn-action">تعديل</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>ORD002</td>
+                        <td>أ.د. فاطمة حسن</td>
+                        <td>توصيل</td>
+                        <td>كلية الطب</td>
+                        <td>2023-11-14</td>
+                        <td><span class="status pending">انتظار</span></td>
+                        <td>-</td>
+                        <td>
+                            <button class="btn-action">عرض</button>
+                            <button class="btn-action">تعديل</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>ORD003</td>
+                        <td>م. خالد عبدالله</td>
+                        <td>طوارئ</td>
+                        <td>مستشفى الطوارئ</td>
+                        <td>2023-11-13</td>
+                        <td><span class="status completed">مكتمل</span></td>
+                        <td>محمد أحمد حسن</td>
+                        <td>
+                            <button class="btn-action">عرض</button>
+                            <button class="btn-action">تعديل</button>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>ORD004</td>
+                        <td>د. نورا سعد</td>
+                        <td>نقل</td>
+                        <td>مركز الأورام</td>
+                        <td>2023-11-12</td>
+                        <td><span class="status rejected">مرفوض</span></td>
+                        <td>-</td>
+                        <td>
+                            <button class="btn-action">عرض</button>
+                            <button class="btn-action">تعديل</button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="pagination">
+            <button class="btn-page">السابق</button>
+            <span class="page-info">صفحة 1 من 4</span>
+            <button class="btn-page">التالي</button>
+        </div>
+    </div>
+
+    <style>
+        .page-container {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .page-header {
+            margin-bottom: 30px;
+        }
+
+        .page-header h1 {
+            font-size: 28px;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .page-subtitle {
+            color: #666;
+            font-size: 16px;
+        }
+
+        .page-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            gap: 20px;
+        }
+
+        .search-section {
+            display: flex;
+            gap: 8px;
+            flex: 1;
+            max-width: 400px;
+        }
+
+        .search-input {
+            flex: 1;
+            padding: 10px 12px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .btn-search {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .filters-section {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            margin-bottom: 20px;
+            padding: 16px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filter-group label {
+            font-size: 14px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .filter-select, .filter-date {
+            padding: 6px 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .btn-clear-filters {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .table-container {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th {
+            background: #f8f9fa;
+            padding: 12px;
+            text-align: right;
+            font-weight: 600;
+            color: #333;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .data-table td {
+            padding: 12px;
+            border-bottom: 1px solid #dee2e6;
+            font-size: 14px;
+        }
+
+        .data-table tr:hover {
+            background-color: #f8f9fa;
+        }
+
+        .status {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .status.pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .status.approved {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .status.rejected {
+            background: #f8d7da;
+            color: #721c24;
+        }
+
+        .status.completed {
+            background: #d1ecf1;
+            color: #0c5460;
+        }
+
+        .btn-action {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            margin: 0 2px;
+        }
+
+        .btn-action:hover {
+            background: #0056b3;
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .btn-page {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .page-info {
+            color: #666;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .page-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .filters-section {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+            }
+
+            .table-container {
+                overflow-x: auto;
+            }
+
+            .data-table {
+                min-width: 800px;
+            }
+        }
+    </style>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Order list page loaded');
+        });
+    </script>
+</body>
+</html>

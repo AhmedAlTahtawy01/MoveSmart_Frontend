@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة المركبات - Move Smart</title>
+</head>
+<body>
+    <div class="container">
+        <h2>المركبات</h2>
+        <p class="total-cars">إجمالي المركبات: <span id="total-count">0</span></p>
+
+        <!-- Actions: Search, Filter, Add, Refresh -->
+        <div class="actions">
+            <input type="text" id="search" placeholder="بحث..." onkeyup="searchCars()" />
+            <select id="filter-select" onchange="filterCars()">
+                <option value="all" selected>الجميع</option>
+                <option value="1">متاحة</option>
+                <option value="2">مشغولة</option>
+                <option value="3">قيد الصيانة</option>
+            </select>
+            <select id="type-filter" onchange="filterCars()">
+                <option value="all" selected>كل الأنواع</option>
+                <option value="vehicle">سيارة</option>
+                <option value="bus">باص</option>
+            </select>
+            <button onclick="openPop()">+ إضافة مركبة/باص</button>
+            <button onclick="refreshData()">🔄 تحديث</button>
+        </div>
+
+        <!-- Table Header (Fixed) -->
+        <div class="table-header">
+            <span>رقم المركبة</span>
+            <span>الماركة</span>
+            <span>الموديل</span>
+            <span>النوع</span>
+            <span>المستشفى</span>
+            <span>الحالة</span>
+        </div>
+        <div id="cars-container" class="cards-container"></div>
+    </div>
+
+    <!-- Add Vehicle/Bus Modal -->
+    <div id="add-pop" class="pop hidden">
+        <div class="pop-content">
+            <h3>إضافة مركبة جديدة</h3>
+            <select id="add-type-select" onchange="toggleAddType()">
+                <option value="vehicle" selected>سيارة</option>
+                <option value="bus">باص</option>
+            </select>
+
+            <div id="vehicle-fields">
+                <div class="input-row">
+                    <div>
+                        <input type="text" id="car-brand" placeholder="العلامة التجارية" />
+                        <small class="error" id="error-car-brand"></small>
+                    </div>
+                    <div>
+                        <input type="text" id="car-model" placeholder="موديل المركبة" />
+                        <small class="error" id="error-car-model"></small>
+                    </div>
+                </div>
+
+                <div class="input-row">
+                    <div>
+                        <input type="text" id="car-plate" placeholder="رقم اللوحة" />
+                        <small class="error" id="error-car-plate"></small>
+                    </div>
+                    <div>
+                        <select id="car-type">
+                            <option value="">نوع المركبة</option>
+                            <option value="0">سيدان</option>
+                            <option value="1">1 كبينة</option>
+                            <option value="2">2 كبينة</option>
+                            <option value="3">شاحنة</option>
+                            <option value="4">ميكروباص</option>
+                            <option value="5">ميني باص</option>
+                            <option value="6">اتوبيس</option>
+                            <option value="7">اسعاف</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="input-row">
+                    <div>
+                        <input type="text" id="car-hospital" placeholder="المستشفى" />
+                        <small class="error" id="error-car-hospital"></small>
+                    </div>
+                    <div>
+                        <input type="text" id="car-task" placeholder="المهمة" />
+                        <small class="error" id="error-car-task"></small>
+                    </div>
+                </div>
+
+                <div class="input-row">
+                    <div>
+                        <select id="car-status">
+                            <option value="">الحالة</option>
+                            <option value="1">متاح</option>
+                            <option value="2">مشغول</option>
+                            <option value="3">في الصيانة</option>
+                        </select>
+                    </div>
+                    <div>
+                        <input type="number" id="car-kilometers" placeholder="إجمالي الكيلومترات" />
+                    </div>
+                </div>
+
+                <div class="input-row">
+                    <div>
+                        <select id="fuel-type">
+                            <option value="">نوع الوقود</option>
+                            <option value="0">بنزين</option>
+                            <option value="1">ديزل</option>
+                        </select>
+                    </div>
+                    <div>
+                        <input type="number" id="fuel-consumption" placeholder="معدل استهلاك الوقود" />
+                    </div>
+                </div>
+
+                <div>
+                    <input type="number" id="oil-consumption" placeholder="معدل استهلاك الزيت" />
+                </div>
+            </div>
+
+            <div id="bus-fields" style="display:none;">
+                <div class="input-row">
+                    <div>
+                        <input type="number" id="bus-capacity" placeholder="السعة الكلية" />
+                        <small class="error" id="error-bus-capacity"></small>
+                    </div>
+                    <div>
+                        <input type="number" id="bus-available-space" placeholder="المقاعد المتاحة" />
+                        <small class="error" id="error-bus-available-space"></small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-actions">
+                <button onclick="submitVehicle()">حفظ</button>
+                <button onclick="closePop()">إلغاء</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

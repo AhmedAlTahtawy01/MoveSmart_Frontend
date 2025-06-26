@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Move Smart - Dashboard</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="../Assets/Images/favicon_io/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="../Assets/Images/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../Assets/Images/favicon_io/favicon-16x16.png">
+    <link rel="apple-touch-icon" href="../Assets/Images/favicon_io/apple-touch-icon.png">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="../Assets/Styles/sharedLayout.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Menu Toggle Button for Mobile -->
+    <button class="menu-toggle" id="menuToggle">
+        <img src="../Assets/Images/menu.svg" alt="Menu" />
+    </button>
+
+    <!-- Top Bar -->
+    <div class="topbar">
+        <div class="profile">
+            <span id="userName">Loading...</span>
+            <img src="../Assets/Images/users.svg" alt="User" />
+            <button id="logoutButton" class="logout-button">
+                <img src="../Assets/Images/logout.svg" alt="Logout" />
+            </button>
+        </div>
+        <button class="notification-btn">
+            <img class="notification" src="../Assets/Images/bell.svg" alt="Notifications" />
+        </button>
+        <div class="search-container">
+            <input type="text" placeholder="بحـث..." />
+            <img src="../Assets/Images/search.svg" alt="Search" />
+        </div>
+    </div>
+
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <h2 class="logo">Move Smart</h2>
+        <h2 class="logo-subtitle">نظام التحكم في السيارات</h2>
+        <button class="create-order" onclick="createOrder()">إنشاء طلب</button>
+        
+        <ul class="menu" id="menu">
+            <li class="menu-item active" data-content="home" onclick="changeContent('home')">
+                <img src="../Assets/Images/home.svg" alt="Home" /> 
+                <span>الصفحة الرئيسية</span>
+            </li>
+            <li class="menu-item" data-content="vehicles" onclick="changeContent('vehicles')">
+                <img src="../Assets/Images/cars.svg" alt="Vehicles" /> 
+                <span>المركبات</span>
+            </li>
+            <li class="menu-item" data-content="drivers" onclick="changeContent('drivers')">
+                <img src="../Assets/Images/users.svg" alt="Drivers" /> 
+                <span>السائقين</span>
+            </li>
+            <li class="menu-item" data-content="applications" onclick="changeContent('applications')">
+                <img src="../Assets/Images/document.svg" alt="Applications" /> 
+                <span>الطلبات</span>
+            </li>
+            
+            <!-- Role-specific menu items (will be shown/hidden based on user role) -->
+            <li class="menu-item" data-content="consumables" data-roles="GeneralManager,HospitalManager" onclick="changeContent('consumables')">
+                <img src="../Assets/Images/car-mechanic.svg" alt="Consumables" /> 
+                <span>المستهلكات</span>
+            </li>
+            <li class="menu-item" data-content="spareParts" data-roles="GeneralManager,WorkshopSupervisor" onclick="changeContent('spareParts')">
+                <img src="../Assets/Images/repair-alt.svg" alt="Spare Parts" /> 
+                <span>قطع الغيار</span>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Main Content Area -->
+    <div class="content" id="content">
+        <!-- Default Dashboard Content -->
+        <div id="default-content">
+            <h2 id="welcome-message">مرحبًا بك في نظام Move Smart</h2>
+            <div class="dashboard-grid" id="dashboard-grid">
+                <!-- Dashboard cards will be loaded here based on user role -->
+            </div>
+        </div>
+        
+        <!-- Dynamic content will be loaded here -->
+        <div id="dynamic-content" style="display: none;">
+            <!-- Content from other pages will be loaded here -->
+            <div id="loading-indicator" class="loading-indicator" style="display: none;">
+                <div class="spinner"></div>
+                <p>جاري التحميل...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>جميع الحقوق محفوظة &copy; 2023 Move Smart</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../Javascript/auth.js"></script>
+    <script src="../Javascript/authGuard.js"></script>
+    <script src="../Javascript/dashboards.js"></script>
+    <script src="../Javascript/_sharedLayout.js"></script>
+</body>
+</html>

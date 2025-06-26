@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="../Assets/Styles/sharedLayout.css" />
+    <link
+      rel="stylesheet"
+      href="../Assets/Styles/superUserDashboard.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <title>SuperUser Dashboard - Move Smart</title>
+
+    <link rel="icon" type="image/x-icon" href="../Assets/Images/favicon_io/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="../Assets/Images/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../Assets/Images/favicon_io/favicon-16x16.png">
+    <link rel="apple-touch-icon" href="../Assets/Images/favicon_io/apple-touch-icon.png">
+    
+  </head>
+  <body>
+    <div class="topbar">
+      <div class="profile">
+        <span id="userName">Loading...</span>
+        <img src="../Assets/Images/users.svg" alt="User" />
+        <button id="logoutButton" class="logout-button">
+          <img src="../Assets/Images/logout.svg" alt="Logout" />
+        </button>
+      </div>
+      <button>
+        <img class="notification" src="../Assets/Images/bell.svg" alt="" />
+      </button>
+      <div class="search-container">
+        <input type="text" placeholder="بحـث..." />
+        <img src="../Assets/Images/search.svg" alt="Search" />
+      </div>
+    </div>
+
+    <div class="content" id="content">
+      <h2>مرحبًا بك في لوحة تحكم المشرف الرئيسي</h2>
+      <div class="dashboard-cards">
+        <div class="info-card" onclick="navigateToSection('users')">
+          <div class="card-icon">
+            <img src="../Assets/Images/users.svg" alt="Users" />
+          </div>
+          <div class="card-content">
+            <h3>معلومات المستخدمين</h3>
+            <p class="card-description">إدارة جميع المستخدمين في النظام</p>
+            <div class="card-stats">
+              <div class="stat-item">
+                <span class="stat-number" id="totalUsers">125</span>
+                <span class="stat-label">إجمالي المستخدمين</span>
+              </div>
+              <!-- <div class="stat-item">
+                            <span class="stat-number" id="activeUsers">98</span>
+                            <span class="stat-label">المستخدمين النشطين</span>
+                        </div> -->
+            </div>
+          </div>
+          <div class="card-arrow">
+            <img src="../Assets/Images/arrow-right.svg" alt="Navigate" />
+          </div>
+        </div>
+
+        <div class="info-card" onclick="navigateToSection('cars')">
+          <div class="card-icon">
+            <img src="../Assets/Images/cars.svg" alt="Cars" />
+          </div>
+          <div class="card-content">
+            <h3>معلومات السيارات</h3>
+            <p class="card-description">إدارة جميع السيارات في الأسطول</p>
+            <div class="card-stats">
+              <div class="stat-item">
+                <span class="stat-number" id="totalCars">1283</span>
+                <span class="stat-label">إجمالي السيارات</span>
+              </div>
+              <!-- <div class="stat-item">
+                            <span class="stat-number" id="activeCars">1256</span>
+                            <span class="stat-label">السيارات النشطة</span>
+                        </div> -->
+            </div>
+          </div>
+          <div class="card-arrow">
+            <img src="../Assets/Images/arrow-right.svg" alt="Navigate" />
+          </div>
+        </div>
+
+        <div class="info-card" onclick="navigateToSection('drivers')">
+          <div class="card-icon">
+            <img src="../Assets/Images/driver.svg" alt="Drivers" />
+          </div>
+          <div class="card-content">
+            <h3>معلومات السائقين</h3>
+            <p class="card-description">إدارة جميع السائقين في النظام</p>
+            <div class="card-stats">
+              <div class="stat-item">
+                <span class="stat-number" id="totalDrivers">156</span>
+                <span class="stat-label">إجمالي السائقين</span>
+              </div>
+              <!-- <div class="stat-item">
+                            <span class="stat-number" id="activeDrivers">134</span>
+                            <span class="stat-label">السائقين المتاحين</span>
+                        </div> -->
+            </div>
+          </div>
+          <div class="card-arrow">
+            <img src="../Assets/Images/arrow-right.svg" alt="Navigate" />
+          </div>
+        </div>
+
+        <div class="info-card" onclick="navigateToSection('applications')">
+          <div class="card-icon">
+            <img src="../Assets/Images/application.svg" alt="Applications" />
+          </div>
+          <div class="card-content">
+            <h3>معلومات الطلبات</h3>
+            <p class="card-description">إدارة جميع الطلبات في النظام</p>
+            <div class="card-stats">
+              <div class="stat-item">
+                <span class="stat-number" id="totalApplications">125</span>
+                <span class="stat-label">إجمالي الطلبات</span>
+              </div>
+            </div>
+          </div>
+          <div class="card-arrow">
+            <img src="../Assets/Images/arrow-right.svg" alt="Navigate" />
+          </div>
+        </div>
+
+        <div class="info-card" onclick="navigateToSection('consumables')">
+          <div class="card-icon">
+            <img src="../Assets/Images/disposal.svg" alt="Consumables" />
+          </div>
+          <div class="card-content">
+            <h3>معلومات المستهلكات</h3>
+            <p class="card-description">إدارة جميع المستهلكات في النظام</p>
+            <div class="card-stats">
+              <div class="stat-item">
+                <span class="stat-number" id="totalConsumables">125</span>
+                <span class="stat-label">إجمالي المستهلكات</span>
+              </div>
+            </div>
+          </div>
+          <div class="card-arrow">
+            <img src="../Assets/Images/arrow-right.svg" alt="Navigate" />
+          </div>
+        </div>
+
+        <div class="info-card" onclick="navigateToSection('spareParts')">
+          <div class="card-icon">
+            <img src="../Assets/Images/spareParts.svg" alt="SpareParts" />
+          </div>
+          <div class="card-content">
+            <h3>معلومات قطع الغيار</h3>
+            <p class="card-description">إدارة جميع قطع الغيار في النظام</p>
+            <div class="card-stats">
+              <div class="stat-item">
+                <span class="stat-number" id="totalSpareParts">125</span>
+                <span class="stat-label">إجمالي قطع الغيار</span>
+              </div>
+            </div>
+          </div>
+          <div class="card-arrow">
+            <img src="../Assets/Images/arrow-right.svg" alt="Navigate" />
+          </div>
+        </div>
+
+        <div class="info-card" onclick="navigateToSection('reports')">
+          <div class="card-icon">
+            <img src="../Assets/Images/report.svg" alt="Reports" />
+          </div>
+          <div class="card-content">
+            <h3>معلومات التقارير</h3>
+            <p class="card-description">إدارة جميع التقارير في النظام</p>
+            <div class="card-stats">
+              <div class="stat-item">
+                <span class="stat-number" id="totalReports">125</span>
+                <span class="stat-label">إجمالي التقارير</span>
+              </div>
+            </div>
+          </div>
+          <div class="card-arrow">
+            <img src="../Assets/Images/arrow-right.svg" alt="Navigate" />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="../Javascript/auth.js"></script>
+    <script src="../Javascript/authGuard.js"></script>
+    <script src="../Javascript/dashboards.js"></script>
+    <script src="../Javascript/superUserDashboard.js"></script>
+  </body>
+  <footer>
+    <p>جميع الحقوق محفوظة &copy; 2023 Move Smart</p>
+  </footer>
+</html>

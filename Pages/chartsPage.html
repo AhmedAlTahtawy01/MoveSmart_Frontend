@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Charts - Move Smart</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="../Assets/Styles/chartsPage.css">
+</head>
+<body>
+    <div class="content" id="content">
+        <h2>نظرة شاملة على إحصائيات النظام</h2>
+
+        <div class="dashboard-grid">
+            <!-- كارت السائقين -->
+            <div class="card">
+                <span class="edit-icon">📊</span>
+                <h2>نظرة عامة على السائقين</h2>
+                <div class="card-content">
+                    <canvas id="driverChart"></canvas>
+                    <div class="card-details">
+                        <table class="card-table">
+                            <tr>
+                                <td>إجمالي السائقين</td>
+                                <td id="total-drivers">0</td>
+                            </tr>
+                            <tr>
+                                <td>أمر شغل <span class="dot orange"></span></td>
+                                <td id="working-drivers">0</td>
+                            </tr>
+                            <tr>
+                                <td>متاح <span class="dot green"></span></td>
+                                <td id="available-drivers">0</td>
+                            </tr>
+                            <tr>
+                                <td>إجازة <span class="dot red"></span></td>
+                                <td id="onleave-drivers">0</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- كارت السيارات -->
+            <div class="card">
+                <span class="edit-icon">🚗</span>
+                <h2>نظرة عامة على السيارات</h2>
+                <div class="card-content">
+                    <canvas id="carChart"></canvas>
+                    <div class="card-details">
+                        <table class="card-table">
+                            <tr>
+                                <td>إجمالي السيارات</td>
+                                <td id="total-cars">0</td>
+                            </tr>
+                            <tr>
+                                <td>طور الصيانة <span class="dot orange"></span></td>
+                                <td id="cars-maintenance">0</td>
+                            </tr>
+                            <tr>
+                                <td>متاح <span class="dot green"></span></td>
+                                <td id="cars-available">0</td>
+                            </tr>
+                            <tr>
+                                <td>أمر شغل <span class="dot red"></span></td>
+                                <td id="cars-working">0</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- كارت الطلبات -->
+            <div class="card">
+                <span class="edit-icon">📋</span>
+                <h2>الطلبات</h2>
+                <div class="card-content">
+                    <canvas id="orderChart"></canvas>
+                    <div class="card-details">
+                        <table class="card-table">
+                            <tr>
+                                <td>إجمالي الطلبات</td>
+                                <td id="total-orders">0</td>
+                            </tr>
+                            <tr>
+                                <td>انتظار <span class="dot orange"></span></td>
+                                <td id="orders-pending">0</td>
+                            </tr>
+                            <tr>
+                                <td>موافقة <span class="dot green"></span></td>
+                                <td id="orders-approved">0</td>
+                            </tr>
+                            <tr>
+                                <td>مرفوض <span class="dot red"></span></td>
+                                <td id="orders-rejected">0</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- كارت المستهلكات -->
+            <div class="card">
+                <span class="edit-icon">🔧</span>
+                <h2>المستهلكات</h2>
+                <div class="card-content">
+                    <canvas id="consumableChart"></canvas>
+                    <div class="card-details">
+                        <table class="card-table">
+                            <tr>
+                                <td>إجمالي المستهلكات</td>
+                                <td id="total-consumables">0</td>
+                            </tr>
+                            <tr>
+                                <td>متوفر <span class="dot green"></span></td>
+                                <td id="consumables-available">0</td>
+                            </tr>
+                            <tr>
+                                <td>مستهلك <span class="dot red"></span></td>
+                                <td id="consumables-used">0</td>
+                            </tr>
+                            <tr>
+                                <td>في الطلب <span class="dot orange"></span></td>
+                                <td id="consumables-inorder">0</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- كارت قطع الغيار -->
+            <div class="card">
+                <span class="edit-icon">⚙️</span>
+                <h2>قطع الغيار</h2>
+                <div class="card-content">
+                    <canvas id="sparePartChart"></canvas>
+                    <div class="card-details">
+                        <table class="card-table">
+                            <tr>
+                                <td>إجمالي قطع الغيار</td>
+                                <td id="total-spareParts">0</td>
+                            </tr>
+                            <tr>
+                                <td>متوفر <span class="dot green"></span></td>
+                                <td id="spareParts-available">0</td>
+                            </tr>
+                            <tr>
+                                <td>مستهلك <span class="dot red"></span></td>
+                                <td id="spareParts-used">0</td>
+                            </tr>
+                            <tr>
+                                <td>في الطلب <span class="dot orange"></span></td>
+                                <td id="spareParts-inorder">0</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- كارت التقارير -->
+            <div class="card">
+                <span class="edit-icon">📈</span>
+                <h2>التقارير</h2>
+                <div class="card-content">
+                    <canvas id="reportChart"></canvas>
+                    <div class="card-details">
+                        <table class="card-table">
+                            <tr>
+                                <td>إجمالي التقارير</td>
+                                <td id="total-reports">0</td>
+                            </tr>
+                            <tr>
+                                <td>تقارير السائقين <span class="dot orange"></span></td>
+                                <td id="report-drivers">0</td>
+                            </tr>
+                            <tr>
+                                <td>تقارير السيارات <span class="dot green"></span></td>
+                                <td id="report-vehicles">0</td>
+                            </tr>
+                            <tr>
+                                <td>تقارير الطلبات <span class="dot red"></span></td>
+                                <td id="report-orders">0</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Loading overlay -->
+        <div id="loadingOverlay" class="loading-overlay">
+            <div class="loading-spinner">
+                <div class="spinner"></div>
+                <p>جاري تحميل البيانات...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="../Javascript/chartsPage.js"></script>
+</body>
+</html>
