@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>إدارة الطلبات</title>
+  <link rel="icon" type="image/x-icon" href="../../Assets/Images/favicon_io/favicon.ico" />
+</head>
+<body>
+  <div class="container">
+    <!-- Header with title and actions -->
+    <div class="page-header">
+      <h1 class="page-title">إدارة الطلبات</h1>
+      <div class="header-actions">
+        <button class="header-btn" onclick="refreshApplications()">
+          <span class="icon">🔄</span>
+          <span>تحديث</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Applications Section -->
+    <div class="applications-section">
+      <div class="section-header">
+        <h2>أنواع الطلبات</h2>
+        <p>اختر نوع الطلب الذي تريد إدارته</p>
+      </div>
+
+      <div class="applications-grid">
+        <!-- Purchase Order Card -->
+        <div class="application-card" id="purchaseOrder">
+          <div class="card-icon">🛒</div>
+          <h3 class="card-title">إذن الشراء</h3>
+          <p class="card-description">إدارة طلبات الشراء والمخازن</p>
+          <div class="card-badge">متاح</div>
+        </div>
+
+        <!-- Withdraw Order Card -->
+        <div class="application-card" id="withdrawOrder">
+          <div class="card-icon">💰</div>
+          <h3 class="card-title">إذن الصرف</h3>
+          <p class="card-description">إدارة طلبات الصرف المالي</p>
+          <div class="card-badge">متاح</div>
+        </div>
+
+        <!-- Maintenance Requests Card -->
+        <div class="application-card" id="maintenanceRequests">
+          <div class="card-icon">🔧</div>
+          <h3 class="card-title">طلبات الصيانة</h3>
+          <p class="card-description">إدارة طلبات الصيانة وإرسالها للموافقة</p>
+          <div class="card-badge">متاح</div>
+        </div>
+
+        <!-- Actual Maintenance Card -->
+        <div class="application-card" id="actualMaintenance">
+          <div class="card-icon">🛠️</div>
+          <h3 class="card-title">الصيانة الفعلية</h3>
+          <p class="card-description">تسجيل أعمال الصيانة المنفذة للمركبات</p>
+          <div class="card-badge">متاح</div>
+        </div>
+
+        <!-- Mission Order Card -->
+        <div class="application-card" id="missionOrder">
+          <div class="card-icon">🚀</div>
+          <h3 class="card-title">أذن مأمورية</h3>
+          <p class="card-description">إدارة طلبات المأموريات الرسمية</p>
+          <div class="card-badge">متاح</div>
+        </div>
+
+        <!-- Job Orders Card -->
+        <div class="application-card" id="jobOrder">
+          <div class="card-icon">⚙️</div>
+          <h3 class="card-title">أوامر الشغل</h3>
+          <p class="card-description">إدارة أوامر الشغل والمهام</p>
+          <div class="card-badge">متاح</div>
+        </div>
+
+        <!-- Mission Note Order Card -->
+        <div class="application-card" id="missionNoteOrder">
+          <div class="card-icon">📝</div>
+          <h3 class="card-title">مذكرة مأمورية</h3>
+          <p class="card-description">طلبات المأمورية من مديري المستشفيات</p>
+          <div class="card-badge coming-soon">قريباً</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Purchase Order Popup Modal -->
+    <div id="purchaseOrderModal" class="modal-overlay hidden">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h2 class="modal-title">طلبات الشراء</h2>
+          <button type="button" class="close-modal-btn" onclick="closePurchaseOrderModal()">
+            ✕
+          </button>
+        </div>
+
+        <!-- Modal Actions -->
+        <div class="modal-actions">
+          <button class="header-btn" onclick="refreshPurchaseOrders()">
+            <span class="icon">🔄</span>
+            <span>تحديث</span>
+          </button>
+          <button id="addPurchaseOrderBtn" class="add-btn" onclick="openAddPurchaseOrderForm()">
+            <span class="icon">➕</span>
+            <span>إضافة طلب شراء</span>
+          </button>
+        </div>
+
+        <!-- Purchase Orders Container -->
+        <div class="orders-section">
+          <div class="section-header">
+            <h3>قائمة طلبات الشراء</h3>
+            <p>إدارة وموافقة طلبات الشراء للمستهلكات وقطع الغيار</p>
+          </div>
+          
+          <div id="purchaseOrdersContainer" class="orders-container">
+            <div class="loading-indicator">
+              <div class="spinner"></div>
+              <p>جاري تحميل طلبات الشراء...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add/Edit Purchase Order Form -->
+    <div id="addPurchaseOrderPopup" class="popup hidden">
+      <div class="popup-content job-order-form">
+        <div class="form-header">
+          <h2>طلب شراء جديد</h2>
+          <button type="button" class="close-btn" onclick="closeAddPurchaseOrderForm()">
+            ✕
+          </button>
+        </div>
+        
+        <form id="purchaseOrderForm" onsubmit="submitPurchaseOrder(event)">
+          <div class="form-section">
+            <h3 class="section-title">معلومات الطلب</h3>
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="purchaseOrderType">نوع الطلب</label>
+                <select id="purchaseOrderType" required onchange="togglePurchaseType()">
+                  <option value="">اختر نوع الطلب</option>
+                  <option value="spare">قطع غيار</option>
+                  <option value="consumable">مستهلكات</option>
+                </select>
+              </div>
+              
+              <div class="form-group" id="sparePartsGroup" style="display: none">
+                <label for="sparePartSelect">اختر قطعة الغيار</label>
+                <select id="sparePartSelect">
+                  <option value="">جاري التحميل...</option>
+                </select>
+              </div>
+              
+              <div class="form-group" id="consumableGroup" style="display: none">
+                <label for="consumableSelect">اختر المستهلك</label>
+                <select id="consumableSelect">
+                  <option value="">جاري التحميل...</option>
+                </select>
+              </div>
+              
+              <div class="form-group">
+                <label for="requiredQuantity">الكمية المطلوبة</label>
+                <input type="number" id="requiredQuantity" required min="1" />
+              </div>
+              
+              <div class="form-group full-width">
+                <label for="purchaseOrderDescription">الوصف</label>
+                <textarea id="purchaseOrderDescription" required rows="3"></textarea>
+              </div>
+            </div>
+          </div>
+          
+          <div class="form-actions">
+            <button class="btn btn-primary" type="submit">
+              <span>💾</span> حفظ
+            </button>
+            <button class="btn btn-secondary" type="button" onclick="closeAddPurchaseOrderForm()">
+              <span>❌</span> إلغاء
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay hidden">
+      <div class="loading-content">
+        <div class="spinner large"></div>
+        <p>جاري المعالجة...</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

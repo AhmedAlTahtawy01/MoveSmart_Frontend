@@ -3,219 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spare Parts Management - Move Smart</title>
+    <title>إدارة قطع الغيار - Move Smart</title>
+    <link rel="icon" type="image/x-icon" href="../../Assets/Images/favicon_io/favicon.ico" />
+    <link rel="stylesheet" href="../../Assets/Styles/disposal-Managment/spareParts.css" />
 </head>
 <body>
-    <div class="page-container">
+    <div class="container">
+        <!-- Page Header -->
         <div class="page-header">
-            <h1>إدارة قطع الغيار</h1>
+            <h1 class="page-title">إدارة قطع الغيار</h1>
             <p class="page-subtitle">إدارة وعرض جميع قطع الغيار في النظام</p>
         </div>
 
-        <div class="page-actions">
-            <div class="search-section">
-                <input type="text" placeholder="البحث عن قطعة غيار..." class="search-input">
-                <button class="btn-search">🔍</button>
+        <!-- Statistics and Actions Header -->
+        <div class="header-section">
+            <div class="stats-section">
+                <h2 class="total-count">إجمالي قطع الغيار: <span id="totalCount">0</span></h2>
             </div>
-            <div class="action-buttons">
-                <button class="btn-primary">إضافة قطعة جديدة</button>
-                <button class="btn-secondary">تصدير القائمة</button>
+            <div class="actions-section">
+                <button id="addBtn" class="btn-primary" onclick="openAddPartPopup()">
+                    <span class="icon">➕</span>
+                    <span>إضافة قطعة</span>
+                </button>
+                <button id="refreshBtn" class="btn-secondary" onclick="refreshParts()">
+                    <span class="icon">🔄</span>
+                    <span>تحديث</span>
+                </button>
+                <div class="search-container">
+                    <input type="text" id="searchInput" class="search-input" placeholder="البحث عن قطعة غيار..." />
+                    <span class="search-icon">🔍</span>
+                </div>
             </div>
         </div>
 
-        <div class="table-container">
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>الكود</th>
-                        <th>اسم القطعة</th>
-                        <th>موديل السيارة</th>
-                        <th>الكمية المتاحة</th>
-                        <th>الحد الأدنى</th>
-                        <th>الحالة</th>
-                        <th>آخر تحديث</th>
-                        <th>الإجراءات</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>SP001</td>
-                        <td>فلتر هواء</td>
-                        <td>Toyota Camry</td>
-                        <td>8</td>
-                        <td>5</td>
-                        <td><span class="status available">متوفر</span></td>
-                        <td>2023-11-15</td>
-                        <td>
-                            <button class="btn-action">عرض</button>
-                            <button class="btn-action">تعديل</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>SP002</td>
-                        <td>إطار احتياطي</td>
-                        <td>Honda CR-V</td>
-                        <td>2</td>
-                        <td>3</td>
-                        <td><span class="status low">منخفض</span></td>
-                        <td>2023-11-10</td>
-                        <td>
-                            <button class="btn-action">عرض</button>
-                            <button class="btn-action">تعديل</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <!-- Main Content -->
+        <div class="content-section">
+            <!-- Parts List (Left Side) -->
+            <div class="parts-list-section">
+                <div class="section-header">
+                    <h3>قائمة قطع الغيار</h3>
+                    <p>اختر قطعة لعرض التفاصيل</p>
+                </div>
+                <div class="parts-list-container">
+                    <div id="partsListLoading" class="loading-indicator">
+                        <div class="spinner"></div>
+                        <p>جاري تحميل قطع الغيار...</p>
+                    </div>
+                    <ul id="partsList" class="parts-list hidden"></ul>
+                    <div id="noPartsMessage" class="no-data-message hidden">
+                        <span class="icon">📦</span>
+                        <p>لا توجد قطع غيار متاحة</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Parts Cards (Right Side) -->
+            <div class="cards-section">
+                <div class="section-header">
+                    <h3>تفاصيل قطع الغيار</h3>
+                    <p>اختر قطعة من القائمة لعرض التفاصيل</p>
+                </div>
+                <div id="cardsContainer" class="cards-container">
+                    <div class="empty-state">
+                        <span class="icon">👆</span>
+                        <p>اختر قطعة من القائمة لعرض التفاصيل</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add/Edit Part Popup -->
+        <div id="addPartPopup" class="popup hidden">
+            <div class="popup-content">
+                <div class="popup-header">
+                    <h3 id="popupTitle">إضافة قطعة غيار جديدة</h3>
+                    <button type="button" class="close-btn" onclick="closeAddPartPopup()">✕</button>
+                </div>
+
+                <form id="partForm" onsubmit="submitPart(event)">
+                    <div class="form-section">
+                        <div class="form-group">
+                            <label for="partName">اسم القطعة <span class="required">*</span></label>
+                            <input type="text" id="partName" required placeholder="أدخل اسم القطعة" />
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="quantity">الكمية المتاحة <span class="required">*</span></label>
+                                <input type="number" id="quantity" required min="0" placeholder="0" />
+                            </div>
+                            <div class="form-group">
+                                <label for="validityLength">العمر الافتراضي (بالأيام) <span class="required">*</span></label>
+                                <input type="number" id="validityLength" required min="1" placeholder="365" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="popup-actions">
+                        <button type="submit" class="btn-primary" id="submitBtn">
+                            <span class="icon">💾</span>
+                            <span id="submitText">حفظ</span>
+                        </button>
+                        <button type="button" class="btn-secondary" onclick="closeAddPartPopup()">
+                            <span class="icon">❌</span>
+                            <span>إلغاء</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Loading Overlay -->
+        <div id="loadingOverlay" class="loading-overlay hidden">
+            <div class="loading-content">
+                <div class="spinner large"></div>
+                <p>جاري المعالجة...</p>
+            </div>
         </div>
     </div>
-
-    <style>
-        .page-container {
-            padding: 20px;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .page-header {
-            margin-bottom: 30px;
-        }
-
-        .page-header h1 {
-            font-size: 28px;
-            color: #333;
-            margin-bottom: 8px;
-        }
-
-        .page-subtitle {
-            color: #666;
-            font-size: 16px;
-        }
-
-        .page-actions {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            gap: 20px;
-        }
-
-        .search-section {
-            display: flex;
-            gap: 8px;
-            flex: 1;
-            max-width: 400px;
-        }
-
-        .search-input {
-            flex: 1;
-            padding: 10px 12px;
-            border: 1px solid #ddd;
-            border-radius: 6px;
-            font-size: 14px;
-        }
-
-        .btn-search {
-            background: #007bff;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            border-radius: 6px;
-            cursor: pointer;
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 10px;
-        }
-
-        .btn-primary {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 10px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-
-        .btn-secondary {
-            background-color: #6c757d;
-            color: white;
-            border: none;
-            padding: 10px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-
-        .table-container {
-            background: white;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-            margin-bottom: 20px;
-        }
-
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .data-table th {
-            background: #f8f9fa;
-            padding: 12px;
-            text-align: right;
-            font-weight: 600;
-            color: #333;
-            border-bottom: 1px solid #dee2e6;
-        }
-
-        .data-table td {
-            padding: 12px;
-            border-bottom: 1px solid #dee2e6;
-        }
-
-        .data-table tr:hover {
-            background-color: #f8f9fa;
-        }
-
-        .status {
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: 500;
-        }
-
-        .status.available {
-            background: #d4edda;
-            color: #155724;
-        }
-
-        .status.low {
-            background: #f8d7da;
-            color: #721c24;
-        }
-
-        .btn-action {
-            background: #007bff;
-            color: white;
-            border: none;
-            padding: 4px 8px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 12px;
-            margin: 0 2px;
-        }
-
-        .btn-action:hover {
-            background: #0056b3;
-        }
-    </style>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('Spare parts page loaded');
-        });
-    </script>
 </body>
 </html>

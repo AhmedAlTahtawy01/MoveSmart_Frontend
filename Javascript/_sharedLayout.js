@@ -247,9 +247,13 @@ class SharedLayoutManager {
                 cssPath: '/Final_Frontend/Assets/Styles/driver-Managment/driverDetails.css',
                 jsPath: '/Final_Frontend/Javascript/driver-Managment/driverDetails.js'
             },
-            'order-Managment/orderList.html': {
-                cssPath: '/Final_Frontend/Assets/Styles/order-Managment/orderList.css',
-                jsPath: '/Final_Frontend/Javascript/order-Managment/orderList.js'
+            'application-Managment/orderList.html': {
+                cssPath: '/Final_Frontend/Assets/Styles/application-Managment/orderList.css',
+                jsPath: '/Final_Frontend/Javascript/application-Managment/orderList.js'
+            },
+            'application-Managment/purchaseOrderList.html': {
+                cssPath: '/Final_Frontend/Assets/Styles/application-Managment/purchaseOrderList.css',
+                jsPath: '/Final_Frontend/Javascript/application-Managment/purchaseOrderList.js'
             },
             'disposal-Managment/disposalList.html': {
                 cssPath: '/Final_Frontend/Assets/Styles/disposal-Managment/disposalList.css',
@@ -270,7 +274,8 @@ class SharedLayoutManager {
             'css-car-Managment-carDetails-html',
             'css-driver-Managment-driverList-html',
             'css-driver-Managment-driverDetails-html',
-            'css-order-Managment-orderList-html',
+            'css-application-Managment-orderList-html',
+            'css-application-Managment-purchaseOrderList-html',
             'css-disposal-Managment-disposalList-html',
             'css-disposal-Managment-spareParts-html'
         ];
@@ -330,7 +335,8 @@ class SharedLayoutManager {
                 '#script-car-Managment-carList-html',
                 '#script-driver-Managment-driverList-html',
                 '#script-driver-Managment-driverDetails-html',
-                '#script-order-Managment-orderList-html',
+                '#script-application-Managment-orderList-html',
+                '#script-application-Managment-purchaseOrderList-html',
                 '#script-disposal-Managment-disposalList-html',
                 '#script-disposal-Managment-spareParts-html',
                 '#script-chartsPage-html'
@@ -459,6 +465,42 @@ class SharedLayoutManager {
                                 };
                                 
                                 initDriverDetails();
+                            }
+                        }, 300); // Increased delay to ensure script is fully loaded
+                    }
+                    
+                    // Special initialization for spare parts
+                    else if (pagePath === 'disposal-Managment/spareParts.html') {
+                        // Manually trigger spare parts initialization since DOMContentLoaded won't fire
+                        setTimeout(() => {
+                            const token = localStorage.getItem('token');
+                            if (token) {
+                                // Use a more specific check to ensure spare parts functions are loaded
+                                let attempts = 0;
+                                const maxAttempts = 10;
+                                
+                                const initSpareParts = () => {
+                                    attempts++;
+                                    
+                                    // Check if spare parts functions are available
+                                    if (window.forceInitialize && typeof window.forceInitialize === 'function') {
+                                        console.log('🔧 Initializing spare parts page...');
+                                        
+                                        // Call spare parts initialization function
+                                        try {
+                                            window.forceInitialize();
+                                        } catch (error) {
+                                            console.error('Error initializing spare parts:', error);
+                                        }
+                                    } else if (attempts < maxAttempts) {
+                                        console.log(`⏳ Waiting for spare parts functions... (${attempts}/${maxAttempts})`);
+                                        setTimeout(initSpareParts, 200);
+                                    } else {
+                                        console.error('❌ Spare parts functions not available after maximum attempts');
+                                    }
+                                };
+                                
+                                initSpareParts();
                             }
                         }, 300); // Increased delay to ensure script is fully loaded
                     }
@@ -828,7 +870,7 @@ async function changeContent(contentType) {
             // Load order list page
             if (defaultContent) defaultContent.style.display = 'none';
             if (dynamicContent) dynamicContent.style.display = 'block';
-            await window.sharedLayout.loadPageContent('order-Managment/orderList.html');
+            await window.sharedLayout.loadPageContent('application-Managment/orderList.html');
             break;
         case 'consumables':
             // Load disposal list page
