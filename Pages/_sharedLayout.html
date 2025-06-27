@@ -54,21 +54,31 @@
                 <img src="../Assets/Images/cars.svg" alt="Vehicles" /> 
                 <span>المركبات</span>
             </li>
-            <li class="menu-item" data-content="drivers" onclick="changeContent('drivers')">
+            <li class="menu-item" data-content="drivers" data-roles="HospitalManager,GeneralManager,GeneralSupervisor,AdministrativeSupervisor" onclick="changeContent('drivers')">
                 <img src="../Assets/Images/users.svg" alt="Drivers" /> 
                 <span>السائقين</span>
             </li>
-            <li class="menu-item" data-content="applications" onclick="changeContent('applications')">
+            <li class="menu-item" data-content="employees" data-roles="HospitalManager,GeneralManager,GeneralSupervisor,PatrolsSupervisor" onclick="changeContent('employees')">
+                <img src="../Assets/Images/users.svg" alt="Employees" /> 
+                <span>الموظفين</span>
+            </li>
+            <li class="menu-item" data-content="applications" data-roles="HospitalManager,GeneralManager,GeneralSupervisor,AdministrativeSupervisor,WorkshopSupervisor" onclick="changeContent('applications')">
                 <img src="../Assets/Images/document.svg" alt="Applications" /> 
                 <span>الطلبات</span>
             </li>
-            
-            <!-- Role-specific menu items (will be shown/hidden based on user role) -->
-            <li class="menu-item" data-content="consumables" data-roles="GeneralManager,HospitalManager" onclick="changeContent('consumables')">
+            <li class="menu-item" data-content="patrols" data-roles="HospitalManager,GeneralManager,GeneralSupervisor,PatrolsSupervisor" onclick="changeContent('patrols')">
+                <img src="../Assets/Images/shield.svg" alt="Patrols" /> 
+                <span>الدوريات</span>
+            </li>
+            <li class="menu-item" data-content="patrolsSubscriptions" data-roles="HospitalManager,GeneralManager,GeneralSupervisor,PatrolsSupervisor" onclick="changeContent('patrolsSubscriptions')">
+                <img src="../Assets/Images/calendar.svg" alt="Patrols Subscriptions" /> 
+                <span>اشتراكات الدوريات</span>
+            </li>
+            <li class="menu-item" data-content="consumables" data-roles="HospitalManager,GeneralManager,GeneralSupervisor,WorkshopSupervisor" onclick="changeContent('consumables')">
                 <img src="../Assets/Images/car-mechanic.svg" alt="Consumables" /> 
                 <span>المستهلكات</span>
             </li>
-            <li class="menu-item" data-content="spareParts" data-roles="GeneralManager,WorkshopSupervisor" onclick="changeContent('spareParts')">
+            <li class="menu-item" data-content="spareParts" data-roles="HospitalManager,GeneralManager,GeneralSupervisor,WorkshopSupervisor" onclick="changeContent('spareParts')">
                 <img src="../Assets/Images/repair-alt.svg" alt="Spare Parts" /> 
                 <span>قطع الغيار</span>
             </li>

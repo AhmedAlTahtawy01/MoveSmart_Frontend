@@ -3,69 +3,125 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Consumables Management - Move Smart</title>
+    <title>إدارة المواد الاستهلاكية - Move Smart</title>
 </head>
 <body>
     <div class="page-container">
+        <!-- Page Header -->
         <div class="page-header">
-            <h1>إدارة المواد الاستهلاكية</h1>
+            <h1 class="page-title">إدارة المواد الاستهلاكية</h1>
             <p class="page-subtitle">إدارة وعرض جميع المواد الاستهلاكية في النظام</p>
         </div>
 
-        <div class="page-actions">
-            <div class="search-section">
-                <input type="text" placeholder="البحث عن مادة..." class="search-input">
-                <button class="btn-search">🔍</button>
+        <!-- Statistics and Actions Header -->
+        <div class="stats-actions-header">
+            <div class="stats-section">
+                <div class="stat-item">
+                    <span class="stat-number" id="totalCount">0</span>
+                    <span class="stat-label">إجمالي المواد</span>
+                </div>
             </div>
-            <div class="action-buttons">
-                <button class="btn-primary">إضافة مادة جديدة</button>
-                <button class="btn-secondary">تصدير القائمة</button>
+            
+            <div class="actions-section">
+                <button class="btn-primary" onclick="openAddConsumablePopup()">
+                    <span class="icon">➕</span>
+                    <span>إضافة مادة</span>
+                </button>
+                <button class="btn-secondary" onclick="refreshConsumables()">
+                    <span class="icon">🔄</span>
+                    <span>تحديث</span>
+                </button>
+            </div>
+            
+            <div class="search-container">
+                <input type="text" id="searchInput" placeholder="البحث عن مادة استهلاكية..." />
+                <span class="search-icon">🔍</span>
             </div>
         </div>
 
-        <div class="table-container">
-            <table class="data-table">
-                <thead>
-                    <tr>
-                        <th>الكود</th>
-                        <th>اسم المادة</th>
-                        <th>الكمية المتاحة</th>
-                        <th>الوحدة</th>
-                        <th>الحد الأدنى</th>
-                        <th>الحالة</th>
-                        <th>آخر تحديث</th>
-                        <th>الإجراءات</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>C001</td>
-                        <td>بنزين 95</td>
-                        <td>250</td>
-                        <td>لتر</td>
-                        <td>100</td>
-                        <td><span class="status available">متوفر</span></td>
-                        <td>2023-11-15</td>
-                        <td>
-                            <button class="btn-action">عرض</button>
-                            <button class="btn-action">تعديل</button>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>C002</td>
-                        <td>زيت محرك</td>
-                        <td>15</td>
-                        <td>علبة</td>
-                        <td>20</td>
-                        <td><span class="status low">منخفض</span></td>
-                        <td>2023-11-12</td>
-                        <td>
-                            <button class="btn-action">عرض</button>
-                            <button class="btn-action">تعديل</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <!-- Main Content -->
+        <div class="content-section">
+            <!-- Consumables List (Left Side) -->
+            <div class="consumables-list-section">
+                <div class="section-header">
+                    <h3>قائمة المواد الاستهلاكية</h3>
+                    <p>اختر مادة لعرض التفاصيل</p>
+                </div>
+                <div class="consumables-list-container">
+                    <div id="consumablesListLoading" class="loading-indicator">
+                        <div class="spinner"></div>
+                        <p>جاري تحميل المواد الاستهلاكية...</p>
+                    </div>
+                    <ul id="consumablesList" class="consumables-list hidden"></ul>
+                    <div id="noConsumablesMessage" class="no-data-message hidden">
+                        <span class="icon">📦</span>
+                        <p>لا توجد مواد استهلاكية متاحة</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Consumables Cards (Right Side) -->
+            <div class="cards-section">
+                <div class="section-header">
+                    <h3>تفاصيل المواد الاستهلاكية</h3>
+                    <p>اختر مادة من القائمة لعرض التفاصيل</p>
+                </div>
+                <div id="cardsContainer" class="cards-container">
+                    <div class="empty-state">
+                        <span class="icon">👆</span>
+                        <p>اختر مادة من القائمة لعرض التفاصيل</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Add/Edit Consumable Popup -->
+        <div id="addConsumablePopup" class="popup hidden">
+            <div class="popup-content">
+                <div class="popup-header">
+                    <h3 id="popupTitle">إضافة مادة استهلاكية جديدة</h3>
+                    <button type="button" class="close-btn" onclick="closeAddConsumablePopup()">✕</button>
+                </div>
+
+                <form id="consumableForm" onsubmit="submitConsumable(event)">
+                    <div class="form-section">
+                        <div class="form-group">
+                            <label for="consumableName">اسم المادة الاستهلاكية <span class="required">*</span></label>
+                            <input type="text" id="consumableName" required placeholder="أدخل اسم المادة الاستهلاكية" />
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="quantity">الكمية المتاحة <span class="required">*</span></label>
+                                <input type="number" id="quantity" required min="0" placeholder="0" />
+                            </div>
+                            <div class="form-group">
+                                <label for="validityLength">العمر الافتراضي (بالأيام) <span class="required">*</span></label>
+                                <input type="number" id="validityLength" required min="1" placeholder="365" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn-primary">
+                            <span class="icon">💾</span>
+                            <span id="submitText">حفظ</span>
+                        </button>
+                        <button type="button" class="btn-secondary" onclick="closeAddConsumablePopup()">
+                            <span class="icon">✕</span>
+                            <span>إلغاء</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Loading Overlay -->
+        <div id="loadingOverlay" class="loading-overlay hidden">
+            <div class="loading-content">
+                <div class="spinner-large"></div>
+                <p>جاري المعالجة...</p>
+            </div>
         </div>
     </div>
 
@@ -91,15 +147,53 @@
             font-size: 16px;
         }
 
-        .page-actions {
+        .stats-actions-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
+        }
+
+        .stats-section {
+            display: flex;
             gap: 20px;
         }
 
-        .search-section {
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .actions-section {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-primary, .btn-secondary {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+
+        .search-container {
             display: flex;
             gap: 8px;
             flex: 1;
@@ -114,7 +208,7 @@
             font-size: 14px;
         }
 
-        .btn-search {
+        .search-icon {
             background: #007bff;
             color: white;
             border: none;
@@ -123,92 +217,180 @@
             cursor: pointer;
         }
 
-        .action-buttons {
+        .content-section {
             display: flex;
-            gap: 10px;
+            gap: 20px;
         }
 
-        .btn-primary {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            padding: 10px 16px;
-            border-radius: 6px;
-            cursor: pointer;
+        .consumables-list-section {
+            flex: 1;
+        }
+
+        .section-header {
+            margin-bottom: 20px;
+        }
+
+        .section-header h3 {
+            font-size: 20px;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .section-header p {
+            color: #666;
             font-size: 14px;
         }
 
-        .btn-secondary {
-            background-color: #6c757d;
-            color: white;
-            border: none;
-            padding: 10px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-
-        .table-container {
+        .consumables-list-container {
             background: white;
             border-radius: 8px;
             overflow: hidden;
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .loading-indicator {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-top: 4px solid #007bff;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .no-data-message {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .cards-section {
+            flex: 1;
+        }
+
+        .cards-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .empty-state {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .popup-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 400px;
+            width: 100%;
+        }
+
+        .popup-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 20px;
         }
 
-        .data-table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-
-        .data-table th {
-            background: #f8f9fa;
-            padding: 12px;
-            text-align: right;
-            font-weight: 600;
+        .popup-header h3 {
+            font-size: 18px;
             color: #333;
-            border-bottom: 1px solid #dee2e6;
         }
 
-        .data-table td {
-            padding: 12px;
-            border-bottom: 1px solid #dee2e6;
-        }
-
-        .data-table tr:hover {
-            background-color: #f8f9fa;
-        }
-
-        .status {
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 12px;
-            font-weight: 500;
-        }
-
-        .status.available {
-            background: #d4edda;
-            color: #155724;
-        }
-
-        .status.low {
-            background: #f8d7da;
-            color: #721c24;
-        }
-
-        .btn-action {
-            background: #007bff;
-            color: white;
+        .close-btn {
+            background: none;
             border: none;
-            padding: 4px 8px;
-            border-radius: 4px;
+            font-size: 18px;
+            color: #666;
             cursor: pointer;
-            font-size: 12px;
-            margin: 0 2px;
         }
 
-        .btn-action:hover {
-            background: #0056b3;
+        .form-section {
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 10px;
+        }
+
+        .form-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .btn-primary, .btn-secondary {
+            padding: 10px 16px;
+        }
+
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .loading-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .spinner-large {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            border-top: 4px solid #007bff;
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            animation: spin 1s linear infinite;
         }
     </style>
 

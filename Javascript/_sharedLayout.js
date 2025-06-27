@@ -157,14 +157,14 @@ class SharedLayoutManager {
         const dashboardGrid = document.getElementById('dashboard-grid');
         if (!dashboardGrid) return;
 
-        // Define role-specific dashboard cards - removed reports
+        // Define role-specific dashboard cards according to user requirements
         const roleCards = {
-            'GeneralManager': ['drivers', 'cars', 'orders', 'consumables', 'spareParts'],
-            'AdministrativeSupervisor': ['drivers', 'cars', 'orders'],
-            'GeneralSupervisor': ['drivers', 'cars', 'orders'],
             'HospitalManager': ['drivers', 'cars', 'orders', 'consumables', 'spareParts'],
-            'WorkshopSupervisor': ['cars', 'orders', 'consumables', 'spareParts'],
-            'PatrolsSupervisor': ['drivers', 'cars', 'orders']
+            'GeneralManager': ['drivers', 'cars', 'orders', 'consumables', 'spareParts'],
+            'GeneralSupervisor': ['drivers', 'cars', 'orders', 'consumables', 'spareParts'],
+            'AdministrativeSupervisor': ['drivers', 'cars', 'orders'],
+            'PatrolsSupervisor': ['drivers', 'cars', 'orders'],
+            'WorkshopSupervisor': ['cars', 'orders', 'spareParts', 'consumables']
         };
 
         const cards = roleCards[this.userRole] || ['drivers', 'cars', 'orders'];
@@ -501,6 +501,42 @@ class SharedLayoutManager {
                                 };
                                 
                                 initSpareParts();
+                            }
+                        }, 300); // Increased delay to ensure script is fully loaded
+                    }
+                    
+                    // Special initialization for disposal list (consumables)
+                    else if (pagePath === 'disposal-Managment/disposalList.html') {
+                        // Manually trigger disposal list initialization since DOMContentLoaded won't fire
+                        setTimeout(() => {
+                            const token = localStorage.getItem('token');
+                            if (token) {
+                                // Use a more specific check to ensure disposal list functions are loaded
+                                let attempts = 0;
+                                const maxAttempts = 10;
+                                
+                                const initDisposalList = () => {
+                                    attempts++;
+                                    
+                                    // Check if disposal list functions are available
+                                    if (window.forceInitialize && typeof window.forceInitialize === 'function') {
+                                        console.log('📦 Initializing disposal list page...');
+                                        
+                                        // Call disposal list initialization function
+                                        try {
+                                            window.forceInitialize();
+                                        } catch (error) {
+                                            console.error('Error initializing disposal list:', error);
+                                        }
+                                    } else if (attempts < maxAttempts) {
+                                        console.log(`⏳ Waiting for disposal list functions... (${attempts}/${maxAttempts})`);
+                                        setTimeout(initDisposalList, 200);
+                                    } else {
+                                        console.error('❌ Disposal list functions not available after maximum attempts');
+                                    }
+                                };
+                                
+                                initDisposalList();
                             }
                         }, 300); // Increased delay to ensure script is fully loaded
                     }
@@ -883,6 +919,39 @@ async function changeContent(contentType) {
             if (defaultContent) defaultContent.style.display = 'none';
             if (dynamicContent) dynamicContent.style.display = 'block';
             await window.sharedLayout.loadPageContent('disposal-Managment/spareParts.html');
+            break;
+        case 'employees':
+            // Load employees page (placeholder for now)
+            if (defaultContent) defaultContent.style.display = 'none';
+            if (dynamicContent) dynamicContent.style.display = 'block';
+            dynamicContent.innerHTML = `
+                <div class="container">
+                    <h2>الموظفين</h2>
+                    <p>صفحة إدارة الموظفين قيد التطوير</p>
+                </div>
+            `;
+            break;
+        case 'patrols':
+            // Load patrols page (placeholder for now)
+            if (defaultContent) defaultContent.style.display = 'none';
+            if (dynamicContent) dynamicContent.style.display = 'block';
+            dynamicContent.innerHTML = `
+                <div class="container">
+                    <h2>الدوريات</h2>
+                    <p>صفحة إدارة الدوريات قيد التطوير</p>
+                </div>
+            `;
+            break;
+        case 'patrolsSubscriptions':
+            // Load patrols subscriptions page (placeholder for now)
+            if (defaultContent) defaultContent.style.display = 'none';
+            if (dynamicContent) dynamicContent.style.display = 'block';
+            dynamicContent.innerHTML = `
+                <div class="container">
+                    <h2>اشتراكات الدوريات</h2>
+                    <p>صفحة إدارة اشتراكات الدوريات قيد التطوير</p>
+                </div>
+            `;
             break;
         default:
             showDefaultContent();
